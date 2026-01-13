@@ -24,10 +24,8 @@ Route::middleware(['guest'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-  
-
     Route::middleware('role:admin')->group(function () {
-        Route::controller(AdminController::class)->group( function() {
+        Route::controller(AdminController::class)->group(function () {
             Route::get('/admin/dashboard', 'index')->name('admin.dashboard');
         });
     });
@@ -37,5 +35,10 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/logout', function () {
+        Auth::logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+        return redirect('/login');
+    })->name('logout');
 });
