@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\KriteriaController;
 use App\Http\Controllers\Admin\MajelisController;
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\JemaatController;
@@ -37,7 +38,15 @@ Route::middleware(['auth'])->group(function () {
                 Route::post('/simpan', 'storeMajelis')->name('store');
                 Route::get('/edit/{id}', 'editMajelis')->name('edit');
                 Route::put('/update/{id}', 'updateMajelis')->name('update');
-                Route::delete('/update/{id}', 'deleteMajelis')->name('delete');
+                Route::delete('/hapus/{id}', 'deleteMajelis')->name('delete');
+            });
+            Route::controller(KriteriaController::class)->prefix('kriteria')->name('kriteria.')->group(function () {
+                Route::get('/', 'indexKriteria')->name('index');
+                Route::get('/tambah', 'createKriteria')->name('create');
+                Route::post('/simpan', 'storeKriteria')->name('store');
+                Route::get('/edit/{id}', 'editKriteria')->name('edit');
+                Route::put('/update/{id}', 'updateKriteria')->name('update');
+                Route::delete('/hapus/{id}', 'deleteKriteria')->name('delete');
             });
         });
     });
