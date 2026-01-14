@@ -39,6 +39,7 @@
    <!--end::Third Party Plugin(Bootstrap Icons)-->
    <!--begin::Required Plugin(AdminLTE)-->
    <link rel="stylesheet" href="{{asset('assets/dist/css/adminlte.css')}}" />
+     <link rel="stylesheet" href="{{asset('assets/plugins/font-awesome-4.7.0/css/font-awesome.min.css')}}" />
    <!--end::Required Plugin(AdminLTE)-->
    <!-- apexcharts -->
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css"
@@ -59,14 +60,18 @@
                      <i class="bi bi-list"></i>
                   </a>
                </li>
-               <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Home</a></li>
+               <li class="nav-item d-none d-md-block"><a href="{{route('admin.dashboard')}}" class="nav-link">Home</a>
+               </li>
                <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Contact</a></li>
             </ul>
             <ul class="navbar-nav">
                <li class="navbar-nav">
+                  <a href="#" class="btn  btn-sm btn-secondary"><i class="bi bi-person"></i> </a>
+               </li>
+               <li class="navbar-nav">
                   <form action="{{ route('logout') }}" method="POST">
                      @csrf
-                     <button type="submit" class="btn btn-danger">
+                     <button type="submit" class="btn btn-sm btn-danger">
                         Logout
                      </button>
                   </form>

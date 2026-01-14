@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\MajelisController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\JemaatController;
+// use App\Http\Controllers\JemaatController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,16 +25,28 @@ Route::middleware(['guest'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    //Route Admin
     Route::middleware('role:admin')->group(function () {
-        Route::controller(AdminController::class)->group(function () {
-            Route::get('/admin/dashboard', 'index')->name('admin.dashboard');
+        Route::prefix('admin')->name('admin.')->group(function () {
+            Route::controller(AdminController::class)->group(function () {
+                Route::get('/', 'index')->name('dashboard');
+            });
+            Route::controller(MajelisController::class)->prefix('majelis')->name('majelis.')->group(function () {
+                Route::get('/', 'indexMajelis')->name('index');
+                Route::get('/tambah', 'createMajelis')->name('create');
+                Route::post('/simpan', 'storeMajelis')->name('store');
+                Route::get('/edit/{id}', 'editMajelis')->name('edit');
+                Route::put('/update/{id}', 'updateMajelis')->name('update');
+                Route::delete('/update/{id}', 'deleteMajelis')->name('delete');
+            });
         });
     });
-    Route::middleware('role:jemaat')->group(function () {
-        Route::controller(JemaatController::class)->group(function () {
-            Route::get('/jemaat/dashboard', 'index')->name('jemaat.dashboard');
-        });
-    });
+    // Route Jemaat
+    // Route::middleware('role:jemaat')->group(function () {
+    //     Route::controller(JemaatController::class)->group(function () {
+    //         Route::get('/jemaat/dashboard', 'index')->name('jemaat.dashboard');
+    //     });
+    // });
 
     Route::post('/logout', function () {
         Auth::logout();
