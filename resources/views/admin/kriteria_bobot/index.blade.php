@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('judul', 'Daftar Kriteria SPK')
+@section('judul', 'Daftar Kriteria MOORA')
 
 @section('konten')
     <div class="container-fluid">
