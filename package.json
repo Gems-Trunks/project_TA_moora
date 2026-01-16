@@ -15,6 +15,8 @@
         "vite": "^7.0.7"
     },
     "dependencies": {
-        "admin-lte": "^4.0.0-rc4"
+        "admin-lte": "^4.0.0-rc4",
+        "font-awesome": "^4.7.0",
+        "sweetalert2": "^11.26.17"
     }
 }

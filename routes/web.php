@@ -3,10 +3,14 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\KriteriaController;
 use App\Http\Controllers\Admin\MajelisController;
+use App\Http\Controllers\Admin\MooraController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\JemaatController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Jemaat\JemaatController;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Expr\AssignOp\Mod;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -32,6 +36,7 @@ Route::middleware(['auth'])->group(function () {
             Route::controller(AdminController::class)->group(function () {
                 Route::get('/', 'index')->name('dashboard');
             });
+            // Route Calon Majelis
             Route::controller(MajelisController::class)->prefix('majelis')->name('majelis.')->group(function () {
                 Route::get('/', 'indexMajelis')->name('index');
                 Route::get('/tambah', 'createMajelis')->name('create');
@@ -40,6 +45,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::put('/update/{id}', 'updateMajelis')->name('update');
                 Route::delete('/hapus/{id}', 'deleteMajelis')->name('delete');
             });
+            // Route Kriteria & Bobot
             Route::controller(KriteriaController::class)->prefix('kriteria')->name('kriteria.')->group(function () {
                 Route::get('/', 'indexKriteria')->name('index');
                 Route::get('/tambah', 'createKriteria')->name('create');
@@ -48,14 +54,28 @@ Route::middleware(['auth'])->group(function () {
                 Route::put('/update/{id}', 'updateKriteria')->name('update');
                 Route::delete('/hapus/{id}', 'deleteKriteria')->name('delete');
             });
+            // Route Perhitungan Moora
+            Route::controller(MooraController::class)->prefix('Hasil-Moora')->name('moora.')->group(function () {
+                Route::get('/', 'indexMoora')->name('index');
+                Route::get('/perhitungan-moora', 'show')->name('show');
+            });
+            // Route User
+            Route::controller(UserController::class)->prefix('akun')->name('user.')->group(function () {
+                Route::get('/', "index")->name('index');
+                Route::get('/tambah', 'create')->name('create');
+                Route::post('/simpan', 'store')->name('store');
+                Route::get('/edit/{id}', 'edit')->name('edit');
+                Route::put('/update/{id}', 'update')->name('update');
+                Route::delete('/hapus/{id}', 'delete')->name('delete');
+            });
         });
     });
     // Route Jemaat
-    // Route::middleware('role:jemaat')->group(function () {
-    //     Route::controller(JemaatController::class)->group(function () {
-    //         Route::get('/jemaat/dashboard', 'index')->name('jemaat.dashboard');
-    //     });
-    // });
+    Route::middleware('role:jemaat')->group(function () {
+        Route::controller(JemaatController::class)->prefix('jemaat')->name('jemaat.')->group(function () {
+            Route::get('/dashboard', 'index')->name('dashboard');
+        });
+    });
 
     Route::post('/logout', function () {
         Auth::logout();
