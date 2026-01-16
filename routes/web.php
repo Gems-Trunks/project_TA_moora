@@ -30,6 +30,7 @@ Route::middleware(['guest'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+
     //Route Admin
     Route::middleware('role:admin')->group(function () {
         Route::prefix('admin')->name('admin.')->group(function () {
@@ -74,7 +75,12 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware('role:jemaat')->group(function () {
         Route::controller(JemaatController::class)->prefix('jemaat')->name('jemaat.')->group(function () {
             Route::get('/dashboard', 'index')->name('dashboard');
+            Route::get('/penilaian', 'penilaian')->name('penilaian');
         });
+    });
+    Route::controller(JemaatController::class)->prefix('jemaat')->name('jemaat.')->group(function () {
+        Route::get('/profil', 'profil')->name('profil');
+        Route::patch('/profil/update/', 'profilUpdate')->name('profil.update');
     });
 
     Route::post('/logout', function () {

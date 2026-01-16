@@ -1,5 +1,12 @@
 @include('layouts.header')
-@include('layouts.sidebar')
+@auth
+    @if (Auth::user()->role == 'admin')
+        @include('layouts.sidebar')
+    @else
+        @include('layouts.sidebar_user')
+    @endif
+@endauth
+
 <!--begin::App Main-->
 <main class="app-main">
     <!--begin::App Content Header-->
