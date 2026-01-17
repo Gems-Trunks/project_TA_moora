@@ -40,7 +40,7 @@
                                         <span class="badge bg-secondary px-3">{{ $d->bobot }}</span>
                                     </td>
                                     <td class="text-center">
-                                        @if ($d->jenis == 'Benefit')
+                                        @if ($d->jenis == 'benefit')
                                             <span class="text-success fw-bold"><i class="fa fa-arrow-up small"></i>
                                                 Benefit</span>
                                         @else

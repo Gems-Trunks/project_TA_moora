@@ -83,7 +83,7 @@
                 <li class="nav-header text-uppercase"><small>Pengaturan Sistem</small></li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('admin.profil') }}" class="nav-link">
                         <i class="nav-icon bi bi-person-bounding-box"></i>
                         <p>Profil Saya</p>
                     </a>

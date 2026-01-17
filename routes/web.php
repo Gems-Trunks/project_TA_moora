@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\JemaatController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Jemaat\JemaatController;
+use App\Http\Controllers\Jemaat\PerhitunganController;
 use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Expr\AssignOp\Mod;
 
@@ -36,6 +37,9 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('admin')->name('admin.')->group(function () {
             Route::controller(AdminController::class)->group(function () {
                 Route::get('/', 'index')->name('dashboard');
+                // Route Profil admin
+                Route::get('/profil', 'profil')->name('profil');
+                Route::patch('/profil/update', 'profilUpdate')->name('profil.update');
             });
             // Route Calon Majelis
             Route::controller(MajelisController::class)->prefix('majelis')->name('majelis.')->group(function () {
@@ -77,11 +81,16 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/dashboard', 'index')->name('dashboard');
             Route::get('/penilaian', 'penilaian')->name('penilaian');
         });
+        Route::controller(PerhitunganController::class)->prefix('jemaat')->name('jemaat.')->group(function () {
+            Route::get('/penilaian', 'penilaian')->name('penilaian');
+            Route::post('/penilaian/simpan', 'penilaianStore')->name('penilaian.store');
+        });
     });
     Route::controller(JemaatController::class)->prefix('jemaat')->name('jemaat.')->group(function () {
         Route::get('/profil', 'profil')->name('profil');
         Route::patch('/profil/update/', 'profilUpdate')->name('profil.update');
     });
+
 
     Route::post('/logout', function () {
         Auth::logout();

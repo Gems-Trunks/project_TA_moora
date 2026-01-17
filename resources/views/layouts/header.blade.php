@@ -12,7 +12,7 @@
     <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)" />
     <!--end::Accessibility Meta Tags-->
     <!--begin::Primary Meta Tags-->
-    <meta name="title" content="AdminLTE | Dashboard v3" />
+    <meta name="title" content="AdminLTE | @yield('judul')" />
     <meta name="author" content="ColorlibHQ" />
     <meta name="description"
         content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS. Fully accessible with WCAG 2.1 AA compliance." />
@@ -22,7 +22,6 @@
     <!--begin::Accessibility Features-->
     <!-- Skip links will be dynamically added by accessibility.js -->
     <meta name="supported-color-schemes" content="light dark" />
-    <link rel="preload" href="{{ asset('assets/dist/css/adminlte.css') }}" as="style" />
     <!--end::Accessibility Features-->
     <!--begin::Fonts-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css"
@@ -41,6 +40,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css"
         integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="icon" href="{{ asset('assets/images/logos/LOGO_GKE.png') }}" type="image/x-icon">
 </head>
 
 <body class="layout-fixed sidebar-expand-lg sidebar-open bg-body-tertiary">
@@ -57,22 +57,38 @@
                             <i class="bi bi-list"></i>
                         </a>
                     </li>
-                    <li class="nav-item d-none d-md-block"><a href="{{ route('admin.dashboard') }}"
-                            class="nav-link">Home</a>
+                    <li class="nav-item d-none d-md-block">
+                        <a href="{{ Auth::user()->role == 'admin' ? route('admin.dashboard') : route('jemaat.dashboard') }}"
+                            class="nav-link">
+                            Home
+                        </a>
                     </li>
                     <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Contact</a></li>
                 </ul>
                 <ul class="navbar-nav">
-                    <li class="navbar-nav">
-                        <a href="#" class="btn  btn-sm btn-secondary"><i class="bi bi-person"></i> </a>
-                    </li>
-                    <li class="navbar-nav">
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-sm btn-danger">
-                                Logout
-                            </button>
-                        </form>
+                    <li class="nav-item dropdown user-menu">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle"></i>
+                            <span class="d-none d-md-inline ms-1">{{ Auth::user()->nama_lengkap }}</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end shadow border-0">
+                            <li class="user-header bg-primary text-white p-3 text-center">
+                                <i class="bi bi-person-circle style-icon" style="font-size: 3rem;"></i>
+                                <p>
+                                    {{ Auth::user()->nama_lengkap }}
+                                    <small class="d-block text-white-50">Role: {{ ucfirst(Auth::user()->role) }}</small>
+                                </p>
+                            </li>
+                            <li class="user-footer d-flex justify-content-between p-2">
+                                <a href="{{ Auth::user()->role == 'admin' ? route('admin.profil') : route('jemaat.profil') }}"
+                                    class="btn btn-default btn-flat border">Profile</a>
+
+                                <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger btn-flat">Sign out</button>
+                                </form>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>

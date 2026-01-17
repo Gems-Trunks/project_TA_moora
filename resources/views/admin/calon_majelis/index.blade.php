@@ -36,7 +36,7 @@
                             @forelse ($data as $d)
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td>{{ $d->nama_calon }}</td>
+                                    <td class="text-center">{{ $d->nama_calon }}</td>
                                     <td class="text-center">
                                         {{ $d->jenis_kelamin }}
                                     </td>

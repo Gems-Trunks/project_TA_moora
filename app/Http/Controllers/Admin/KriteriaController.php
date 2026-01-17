@@ -25,7 +25,7 @@ class KriteriaController extends Controller
         $request->validate([
             'nama_kriteria' => 'required|string|max:100',
             'bobot' => 'required',
-            "jenis" => 'required'
+            'jenis' => 'required'
         ]);
 
         KriteriaModel::create($request->all());

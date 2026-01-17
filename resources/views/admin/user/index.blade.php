@@ -37,11 +37,11 @@
                             @forelse ($data as $d)
                                 <tr>
                                     <td class="text-center fw-bold">{{ $loop->iteration }}</td>
-                                    <td>{{ $d->nama_lengkap }}</td>
-                                    <td>{{ $d->username }}</td>
+                                    <td class="text-center ">{{ $d->nama_lengkap }}</td>
+                                    <td class="text-center ">{{ $d->username }}</td>
                                     <td>{{ $d->password }}</td>
-                                    <td>{{ $d->role }}</td>
-                                    <td>{{ tanggal($d->created_at) }}</td>
+                                    <td class="text-center ">{{ $d->role }}</td>
+                                    <td class="text-center">{{ tanggal($d->created_at) }}</td>
                                     <td class="text-center">
                                         <div class="d-flex justify-content-center gap-2">
                                             <a href="{{ route('admin.user.edit', $d->id) }}"

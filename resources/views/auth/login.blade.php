@@ -4,7 +4,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>AdminLTE 4 | Login Page</title>
+    <title>Aplikasi Pemilihan | Masuk</title>
     <!--begin::Accessibility Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <meta name="color-scheme" content="light dark" />
@@ -12,7 +12,7 @@
     <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)" />
     <!--end::Accessibility Meta Tags-->
     <!--begin::Primary Meta Tags-->
-    <meta name="title" content="AdminLTE 4 | Login Page" />
+    <meta name="title" content="Aplikasi Pemilihan | Masuk" />
     <meta name="author" content="ColorlibHQ" />
     <meta name="description"
         content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS. Fully accessible with WCAG 2.1 AA compliance." />
@@ -41,6 +41,8 @@
     {{-- <link rel="stylesheet" href="{{ asset('assets/dist/css/adminlte.css') }}" /> --}}
     <!--end::Required Plugin(AdminLTE)-->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="icon" href="{{ asset('assets/images/logos/LOGO_GKE.png') }}" type="image/x-icon">
+
 </head>
 <!--end::Head-->
 <!--begin::Body-->
