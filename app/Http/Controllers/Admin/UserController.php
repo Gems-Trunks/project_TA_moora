@@ -9,7 +9,10 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    //
+    // isi nya cuma CRUD untuk akun Pengguna
+
+
+
     public function index()
     {
         $data = User::get();

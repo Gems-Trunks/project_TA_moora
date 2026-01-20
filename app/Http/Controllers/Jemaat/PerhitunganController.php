@@ -10,7 +10,8 @@ use App\Models\PenilaianModel;
 
 class PerhitunganController extends Controller
 {
-    //
+    // perhitungan ini berisi logika penilaian dimana merubah data data yang ada di view dari huruf menjadi angka menyesuaikan ketentuan yang ada
+
     public function penilaian()
     {
         $calonMajelis = MajelisModel::all();
@@ -21,11 +22,9 @@ class PerhitunganController extends Controller
 
     public function penilaianStore(Request $request)
     {
-        // Ambil ID dari body request karena form Anda mengirimkan 'calon_id'
         $calonId = $request->id_calon;
         $calon = MajelisModel::findOrFail($calonId);
 
-        // 1. Simpan Nilai C1, C2, C3 dari Form Jemaat [cite: 4, 9, 14]
         foreach ($request->nilai as $kriteria_id => $skor) {
             PenilaianModel::updateOrCreate(
                 ['id_calon' => $calonId, 'id_kriteria' => $kriteria_id],
@@ -33,21 +32,17 @@ class PerhitunganController extends Controller
             );
         }
 
-        // 2. Simpan Otomatis C4: Usia (Angka Asli) [cite: 16, 18]
-        PenilaianModel::updateOrCreate(
-            ['id_calon' => $calonId, 'id_kriteria' => 7],
-            ['nilai' => $calon->usia] // Mengambil data usia asli calon [cite: 18]
-        );
-
-        // 2. Simpan Otomatis C4: Usia (Gunakan ID 7) 
-        // Sesuai dokumen: menggunakan angka asli usia [cite: 18]
         PenilaianModel::updateOrCreate(
             ['id_calon' => $calonId, 'id_kriteria' => 7],
             ['nilai' => $calon->usia]
         );
 
-        // 3. Simpan Otomatis C5: Lama Menjadi Jemaat (Gunakan ID 8) 
-        // Logika konversi berdasarkan Tabel 3.5:
+        PenilaianModel::updateOrCreate(
+            ['id_calon' => $calonId, 'id_kriteria' => 7],
+            ['nilai' => $calon->usia]
+        );
+
+
         $lama = $calon->lama_menjadi_jemaat;
         $bobotC5 = 1;
 

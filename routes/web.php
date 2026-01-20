@@ -63,6 +63,8 @@ Route::middleware(['auth'])->group(function () {
             Route::controller(MooraController::class)->prefix('Hasil-Moora')->name('moora.')->group(function () {
                 Route::get('/', 'indexMoora')->name('index');
                 Route::get('/perhitungan-moora', 'show')->name('show');
+                Route::post('/proses', 'prosesMoora')->name('proses');
+                Route::delete('/reset', [MooraController::class, 'resetMoora'])->name('reset');
             });
             // Route User
             Route::controller(UserController::class)->prefix('akun')->name('user.')->group(function () {

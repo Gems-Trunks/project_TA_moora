@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class KriteriaController extends Controller
 {
-    //
+    // isi nya cuma CRUD untuk kriteria
     public function indexKriteria()
     {
         $data = KriteriaModel::all();

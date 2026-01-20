@@ -12,10 +12,9 @@
     <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)" />
     <!--end::Accessibility Meta Tags-->
     <!--begin::Primary Meta Tags-->
-    <meta name="title" content="AdminLTE | @yield('judul')" />
-    <meta name="author" content="ColorlibHQ" />
-    <meta name="description"
-        content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS. Fully accessible with WCAG 2.1 AA compliance." />
+    <meta name="title" content="Aplikasi Pemilihan | @yield('judul')" />
+    <meta name="author" content="Nia" />
+    <meta name="description" content="Aplikasi Pemilihan Untuk Gereja" />
     <meta name="keywords"
         content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard, accessible admin panel, WCAG compliant" />
     <!--end::Primary Meta Tags-->

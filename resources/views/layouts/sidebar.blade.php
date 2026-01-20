@@ -59,7 +59,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('admin.moora.index') }}" class="nav-link">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Proses Moora</p>
                             </a>
@@ -109,9 +109,10 @@
                 </li>
 
                 <li class="nav-item mt-3">
+                    <form action="{{ route('logout') }}" method="POST" id="logout-form" class="d-none">@csrf</form>
                     <a href="#" class="nav-link text-danger"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i class="nav-icon bi bi-box-arrow-left"></i>
+                        <i class="nav-icon bi bi-box-arrow-right"></i>
                         <p>Keluar</p>
                     </a>
                 </li>

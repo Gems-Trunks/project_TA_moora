@@ -9,7 +9,8 @@ use ReturnTypeWillChange;
 
 class MajelisController extends Controller
 {
-    //
+
+    // Isi nya cuma CRUD Majelis
     public function indexMajelis()
     {
         $data = MajelisModel::get();

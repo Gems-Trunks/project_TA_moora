@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
-    //
+    // Isi nya routes dan edit profil
     public function index()
     {
         return view('admin.dashboard');

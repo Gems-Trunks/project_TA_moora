@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 class JemaatController extends Controller
 {
-    //
+    // isi nya cuman routes ke index dan profil untuk update
     public function index()
     {
         return view('jemaat.dashboard');

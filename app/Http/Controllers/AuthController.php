@@ -8,12 +8,14 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    //
-    public function login( ) {
+    // Logika Login
+    public function login()
+    {
         return view('auth.login');
     }
 
-    public function login_proses(Request $request) {
+    public function login_proses(Request $request)
+    {
         $request->validate([
             'username'  => 'required',
             'password'  => 'required',

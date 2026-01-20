@@ -1,3 +1,5 @@
+{{-- =============== sidebar untuk user ============= --}}
+
 <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
     <div class="sidebar-brand">
         <a href="{{ route('jemaat.dashboard') }}" class="brand-link">
