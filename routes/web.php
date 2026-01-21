@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\KriteriaController;
 use App\Http\Controllers\Admin\MajelisController;
 use App\Http\Controllers\Admin\MooraController;
+use App\Http\Controllers\Admin\SpearmanController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\JemaatController;
@@ -74,6 +75,11 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/edit/{id}', 'edit')->name('edit');
                 Route::put('/update/{id}', 'update')->name('update');
                 Route::delete('/hapus/{id}', 'delete')->name('delete');
+            });
+            Route::controller(SpearmanController::class)->prefix('spearman')->name('korelasi.')->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/rank/tambah', 'rankCreate')->name('rank.create');
+                Route::post('/rank/store', 'rankStore')->name('rank.store');
             });
         });
     });

@@ -50,7 +50,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('admin.korelasi.index') }}" class="nav-link">
                         <i class="nav-icon bi bi-cpu-fill"></i>
                         <p>
                             Proses Analisis
