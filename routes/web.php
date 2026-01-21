@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\KriteriaController;
+use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Admin\MajelisController;
 use App\Http\Controllers\Admin\MooraController;
 use App\Http\Controllers\Admin\SpearmanController;
@@ -76,10 +77,17 @@ Route::middleware(['auth'])->group(function () {
                 Route::put('/update/{id}', 'update')->name('update');
                 Route::delete('/hapus/{id}', 'delete')->name('delete');
             });
+            // Route Spearman
             Route::controller(SpearmanController::class)->prefix('spearman')->name('korelasi.')->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('/rank/tambah', 'rankCreate')->name('rank.create');
                 Route::post('/rank/store', 'rankStore')->name('rank.store');
+            });
+
+            //Route Cetak Laporan
+            Route::controller(LaporanController::class)->prefix('laporan')->name('laporan.')->group(function () {
+                Route::get('/', 'index')->name('index');
+                route::post('/cetak', 'cetak')->name('cetak');
             });
         });
     });
