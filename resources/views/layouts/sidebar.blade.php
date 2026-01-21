@@ -9,7 +9,8 @@
 
     <div class="sidebar-wrapper">
         <nav class="mt-2">
-            <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
+            <ul class="nav sidebar-menu nav-pills nav-compact flex-column" data-lte-toggle="treeview" role="menu"
+                data-accordion="false">
 
                 <li class="nav-item">
                     <a href="{{ route('admin.dashboard') }}"
@@ -74,7 +75,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link {{ Route::is('admin.laporan.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.laporan.index') }}"
+                        class="nav-link {{ Route::is('admin.laporan.*') ? 'active' : '' }}">
                         <i class="nav-icon bi bi-file-earmark-bar-graph"></i>
                         <p>Laporan</p>
                     </a>

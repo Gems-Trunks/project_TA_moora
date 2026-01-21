@@ -30,7 +30,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link {{ Route::is('jemaat.perengkingan') ? 'active' : '' }}">
+                    <a href="{{ route('jemaat.perengkingan') }}"
+                        class="nav-link {{ Route::is('jemaat.perengkingan') ? 'active' : '' }}">
                         <i class="nav-icon bi bi-bar-chart-line"></i>
                         <p>Perengkingan</p>
                     </a>

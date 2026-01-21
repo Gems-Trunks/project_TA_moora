@@ -14,40 +14,31 @@
                 </div>
 
                 <div class="col-lg-6">
-                    <div class="row g-3">
+                    <div class="row g-3 flex">
 
-                        <div class="col-6">
-                            <a href="{{ route('admin.majelis.create') }}" class="text-decoration-none">
+                        <div class="col-5">
+                            <a href="{{ route('jemaat.penilaian') }}" class="text-decoration-none">
                                 <div class="menu-box bg-light border rounded shadow-sm hover-effect">
-                                    <i class="bi bi-person-plus-fill fs-1 text-primary"></i>
-                                    <span class="fw-bold text-dark mt-2">TAMBAH JEMAAT</span>
+                                    <i class="fa fa-star fa-3x"></i>
+                                    <span class="fw-bold text-dark mt-2">Penilaian</span>
                                 </div>
                             </a>
                         </div>
 
-                        <div class="col-6">
-                            <a href="#" class="text-decoration-none">
+                        <div class="col-5">
+                            <a href="{{ route('jemaat.perengkingan') }}" class="text-decoration-none">
                                 <div class="menu-box bg-light border rounded shadow-sm hover-effect">
-                                    <i class="bi bi-person-gear fs-1 text-success"></i>
-                                    <span class="fw-bold text-dark mt-2">KELOLA AKUN</span>
+                                    <i class="bi bi bi-bar-chart-line-fill fs-1 text-success"></i>
+                                    <span class="fw-bold text-dark mt-2">Perengkingan</span>
                                 </div>
                             </a>
                         </div>
 
-                        <div class="col-6">
-                            <a href="#" class="text-decoration-none">
+                        <div class="col-5">
+                            <a href="{{ route('jemaat.profil') }}" class="text-decoration-none">
                                 <div class="menu-box bg-light border rounded shadow-sm hover-effect">
-                                    <i class="bi bi-file-earmark-bar-graph fs-1 text-danger"></i>
-                                    <span class="fw-bold text-dark mt-2">LAPORAN</span>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="col-6">
-                            <a href="#" class="text-decoration-none">
-                                <div class="menu-box bg-light border rounded shadow-sm hover-effect">
-                                    <i class="bi bi-gear-fill fs-1 text-secondary"></i>
-                                    <span class="fw-bold text-dark mt-2">PENGATURAN</span>
+                                    <i class="bi bi-person-fill fs-1 text-danger"></i>
+                                    <span class="fw-bold text-dark mt-2">Profil</span>
                                 </div>
                             </a>
                         </div>

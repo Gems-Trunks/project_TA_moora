@@ -42,7 +42,7 @@
                     @endphp
 
                     @if ($isJemaatKriteria)
-                        <div class="mb-3">
+                        <div class="mb-3 row-12 col-md-6">
                             <label class="form-label"><strong>{{ $k->nama_kriteria }}</strong></label>
                             <select name="nilai[{{ $k->id }}]" class="form-select" required>
                                 <option value="" selected disabled>-- Pilih Penilaian --</option>

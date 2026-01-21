@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Jemaat;
 
 use App\Http\Controllers\Controller;
+use App\Models\HasilModel;
 use App\Models\KriteriaModel;
 use App\Models\MajelisModel;
 use Illuminate\Http\Request;
@@ -61,5 +62,35 @@ class PerhitunganController extends Controller
             ['nilai' => $bobotC5]
         );
         return redirect()->route('jemaat.dashboard')->with('success', 'Penilaian Berhasil Disimpan!');
+    }
+
+    public function indexPerengkingan()
+    {
+        $data = HasilModel::with('majelis')
+            ->orderBy('peringkat')
+            ->get();
+        return view("jemaat.perengkingan.index", compact('data'));
+    }
+
+    public function storePerengkingan(Request $request)
+    {
+        $request->validate(['keterangan' => 'max:100']);
+
+        HasilModel::create([
+            'keterangan' => $request->keterangan,
+        ]);
+        return redirect()->back()->with('success', 'keterangan berhasil di simpan');
+    }
+
+    public function cetak()
+    {
+        $data = HasilModel::with('majelis')
+            ->orderBy('peringkat', 'asc')
+            ->get();
+
+        return view('jemaat.perengkingan.cetak', [
+            'data' => $data,
+            'tanggal' => now(),
+        ]);
     }
 }

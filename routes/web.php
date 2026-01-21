@@ -92,6 +92,9 @@ Route::middleware(['auth'])->group(function () {
         Route::controller(PerhitunganController::class)->prefix('jemaat')->name('jemaat.')->group(function () {
             Route::get('/penilaian', 'penilaian')->name('penilaian');
             Route::post('/penilaian/simpan', 'penilaianStore')->name('penilaian.store');
+            Route::get('/perengkingan', 'indexPerengkingan')->name('perengkingan');
+            route::post('/perengkingan/store', 'storePerengkingan')->name('perengkingan.store');
+            route::get('/perengkingan/cetak', 'cetak')->name('perengkingan.cetak');
         });
     });
     Route::controller(JemaatController::class)->prefix('jemaat')->name('jemaat.')->group(function () {

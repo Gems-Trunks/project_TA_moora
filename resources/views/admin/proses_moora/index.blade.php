@@ -100,7 +100,7 @@
                 {{-- TAB 2 : NORMALISASI --}}
                 <div class="tab-pane fade" id="normalisasi">
                     @if ($adaHasil)
-                        <table class="table table-bordered border-dark align-middle">
+                        <table class="table table-responsive table-bordered border-dark align-middle">
                             <thead class="bg-light text-center">
                                 <tr>
                                     <th>Nama Calon</th>
@@ -144,7 +144,7 @@
                 {{-- TAB 3 : RANKING --}}
                 <div class="tab-pane fade" id="ranking">
                     @if ($adaHasil)
-                        <table class="table table-bordered border-dark align-middle">
+                        <table class="table table-responsive table-bordered border-dark align-middle">
                             <thead class="bg-light text-center">
                                 <tr>
                                     <th width="15%">Ranking</th>

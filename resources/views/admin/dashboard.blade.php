@@ -10,7 +10,7 @@
                     </h2>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-12 col-md-6 col-sm-3">
                     <div class="row g-3 justify-content-center">
                         <div class="col-5">
                             <a href="{{ route('admin.majelis.create') }}" class="text-decoration-none">
@@ -40,14 +40,14 @@
                             </a>
                         </div>
                         <!-- <div class="col-5">
-                      <div class="bg-white d-flex align-items-center justify-content-center border rounded shadow-sm"
-                         style="aspect-ratio: 1/1; position: relative; overflow: hidden;">
-                         <svg width="100%" height="100%" style="position: absolute;">
-                            <line x1="0" y1="0" x2="100%" y2="100%" stroke="#dee2e6" stroke-width="2" />
-                            <line x1="100%" y1="0" x2="0" y2="100%" stroke="#dee2e6" stroke-width="2" />
-                         </svg>
-                      </div>
-                   </div> -->
+                                      <div class="bg-white d-flex align-items-center justify-content-center border rounded shadow-sm"
+                                         style="aspect-ratio: 1/1; position: relative; overflow: hidden;">
+                                         <svg width="100%" height="100%" style="position: absolute;">
+                                            <line x1="0" y1="0" x2="100%" y2="100%" stroke="#dee2e6" stroke-width="2" />
+                                            <line x1="100%" y1="0" x2="0" y2="100%" stroke="#dee2e6" stroke-width="2" />
+                                         </svg>
+                                      </div>
+                                   </div> -->
                     </div>
                 </div>
             </div>
