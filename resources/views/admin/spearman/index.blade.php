@@ -33,7 +33,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($data as $i => $row)
+                            @forelse ($data as $i => $row)
                                 <tr>
                                     <td>{{ $i + 1 }}</td>
                                     <td>{{ $row->majelis->nama_calon }}</td>
@@ -42,7 +42,13 @@
                                     <td>{{ $row->d }}</td>
                                     <td>{{ $row->d_kuadrat }}</td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="{{ $data->count() > 0 ? 6 : 6 }}" class="text-center text-muted py-4">
+                                        Data Uji Spearman belum tersedia.
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

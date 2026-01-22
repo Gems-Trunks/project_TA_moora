@@ -17,26 +17,40 @@ class MooraService
    - total benefit dan cost di hitung dari bobot aja 
    - nilai yang di simpan itu ke dua tabel ke proses_moora sama hasil_moora 
    */
+
    public function proses()
    {
-      $penilaian = PenilaianModel::get()->groupBy('id_calon');
+      // hapus data lama
+      ProsesMooraModel::truncate();
+      HasilModel::truncate();
+
+      $penilaian = PenilaianModel::selectRaw('
+        id_calon,
+        id_kriteria,
+        AVG(nilai) as nilai
+    ')
+         ->groupBy('id_calon', 'id_kriteria')
+         ->get()
+         ->groupBy('id_calon');
+
       $kriteria = KriteriaModel::all();
 
-      // 1. Hitung pembagi (normalisasi)
+      // 1. Hitung pembagi
       $pembagi = $this->hitungPembagi($penilaian, $kriteria);
+
+      $hasilYi = [];
 
       // 2. Proses per calon
       foreach ($penilaian as $id_calon => $items) {
          $totalBenefit = 0;
-         $totalCost = 0;
+         $totalCost    = 0;
 
-         // loop perhitungan moora
-         foreach ($kriteria as $index => $k) {
+         foreach ($kriteria as $k) {
             $row = $items->where('id_kriteria', $k->id)->first();
 
-            $nilaiAwal = $row ? $row->nilai : 0;
-            $normalisasi = $nilaiAwal / $pembagi[$k->id];
-            $nilaiBobot = $normalisasi * $k->bobot;
+            $nilaiAwal    = $row ? $row->nilai : 0;
+            $normalisasi  = $nilaiAwal / ($pembagi[$k->id] ?? 1);
+            $nilaiBobot   = $normalisasi * ($k->bobot ?? 0);
 
             if (strtolower($k->jenis) === 'cost') {
                $totalCost += $nilaiBobot;
@@ -44,32 +58,23 @@ class MooraService
                $totalBenefit += $nilaiBobot;
             }
 
-            $isLast = $index === ($kriteria->count() - 1);
-
-            ProsesMooraModel::updateOrCreate(
-               [
-                  'id_calon' => $id_calon,
-                  'id_kriteria' => $k->id
-               ],
-               [
-                  'nilai_awal' => $nilaiAwal,
-                  'nilai_normalisasi' => $normalisasi,
-                  'nilai_bobot' => $nilaiBobot,
-                  'nilai_yi' => $isLast ? ($totalBenefit - $totalCost) : null
-               ]
-            );
+            ProsesMooraModel::create([
+               'id_calon'            => $id_calon,
+               'id_kriteria'         => $k->id,
+               'nilai_awal'          => $nilaiAwal,
+               'nilai_normalisasi'   => $normalisasi,
+               'nilai_bobot'         => $nilaiBobot,
+            ]);
          }
-      }
-      $hasilYi = [];
 
-      // hitung nilai Yi per calon
-      foreach ($penilaian as $id_calon => $items) {
+         // hitung Yi per calon (SETELAH semua kriteria)
          $hasilYi[$id_calon] = $totalBenefit - $totalCost;
       }
 
-      // simpan ke tabel hasil_moora
+      // simpan hasil akhir
       $this->simpanHasilAkhir($hasilYi);
    }
+
 
    /* -----------hitung pembagi----------
    hitung pembagi akan di lakukan secara satu persatu sesuai sama hasil dari penilaian dimana dia akan mengambil dari data calon_majelis

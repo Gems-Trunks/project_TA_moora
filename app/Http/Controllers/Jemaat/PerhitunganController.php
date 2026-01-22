@@ -23,45 +23,47 @@ class PerhitunganController extends Controller
 
     public function penilaianStore(Request $request)
     {
+        $request->validate([
+            'id_calon' => 'required|exists:calon_majelis,id',
+            'nilai' => 'required|array',
+        ]);
+
+        $idJemaat = auth()->user()->id; // atau id_jemaat
         $calonId = $request->id_calon;
         $calon = MajelisModel::findOrFail($calonId);
 
-        foreach ($request->nilai as $kriteria_id => $skor) {
+        foreach ($request->nilai as $idKriteria => $skor) {
             PenilaianModel::updateOrCreate(
-                ['id_calon' => $calonId, 'id_kriteria' => $kriteria_id],
+                [
+                    'id_jemaat' => $idJemaat,
+                    'id_calon' => $calonId,
+                    'id_kriteria' => $idKriteria
+                ],
                 ['nilai' => $skor]
             );
         }
 
+        // nilai otomatis
         PenilaianModel::updateOrCreate(
-            ['id_calon' => $calonId, 'id_kriteria' => 7],
+            [
+                'id_jemaat' => $idJemaat,
+                'id_calon' => $calonId,
+                'id_kriteria' => 7
+            ],
             ['nilai' => $calon->usia]
         );
 
         PenilaianModel::updateOrCreate(
-            ['id_calon' => $calonId, 'id_kriteria' => 7],
-            ['nilai' => $calon->usia]
+            [
+                'id_jemaat' => $idJemaat,
+                'id_calon' => $calonId,
+                'id_kriteria' => 8
+            ],
+            ['nilai' => $calon->lama_menjadi_jemaat]
         );
 
-
-        $lama = $calon->lama_menjadi_jemaat;
-        $bobotC5 = 1;
-
-        if ($lama > 15) {
-            $bobotC5 = 4; // Sangat Lama 
-        } elseif ($lama >= 11 && $lama <= 15) {
-            $bobotC5 = 3; // Lama 
-        } elseif ($lama >= 6 && $lama <= 10) {
-            $bobotC5 = 2; // Cukup Lama 
-        } else {
-            $bobotC5 = 1; // Baru (<= 5 tahun) 
-        }
-
-        PenilaianModel::updateOrCreate(
-            ['id_calon' => $calonId, 'id_kriteria' => 8],
-            ['nilai' => $bobotC5]
-        );
-        return redirect()->route('jemaat.dashboard')->with('success', 'Penilaian Berhasil Disimpan!');
+        return redirect()->route('jemaat.dashboard')
+            ->with('success', 'Penilaian berhasil disimpan');
     }
 
     public function indexPerengkingan()

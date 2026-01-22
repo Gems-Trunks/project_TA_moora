@@ -77,20 +77,29 @@
     </div>
     <script>
         document.getElementById('pilihCalon').addEventListener('change', function() {
-            // Ambil elemen option yang sedang dipilih
+
+            // ambil option terpilih
             const selectedOption = this.options[this.selectedIndex];
 
-            // Ambil data dari atribut data-*
-            const nama = selectedOption.getAttribute('data-nama');
-            const jk = selectedOption.getAttribute('data-jk');
-            const usia = selectedOption.getAttribute('data-usia');
-            const lama = selectedOption.getAttribute('data-lama');
+            // ambil data attribute (ANGKA)
+            const nama = selectedOption.dataset.nama;
+            const jk = selectedOption.dataset.jk;
+            const usia = selectedOption.dataset.usia;
+            const lama = selectedOption.dataset.lama; // 1–4
 
-            // Update tampilan HTML
+            // konversi lama menjadi jemaat ke label
+            let labelLama = '';
+            if (lama == 1) labelLama = '≤ 5 Tahun';
+            else if (lama == 2) labelLama = '6 - 10 Tahun';
+            else if (lama == 3) labelLama = '11 - 15 Tahun';
+            else labelLama = '> 15 Tahun';
+
+            // update tampilan
             document.getElementById('displayNama').innerText = nama;
             document.getElementById('displayJK').innerText = jk;
-            document.getElementById('displayUsia').innerText = usia + " Tahun";
-            document.getElementById('displayLama').innerText = lama + " Tahun";
+            document.getElementById('displayUsia').innerText = usia + ' Tahun';
+            document.getElementById('displayLama').innerText = labelLama;
+
         });
     </script>
     @if (session('success'))
@@ -100,6 +109,22 @@
                 title: 'Berhasil',
                 text: '{{ session('success') }}'
             })
+        </script>
+    @endif
+    @if (session('error'))
+        <script>
+            window.onload = function() {
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'error',
+                        text: "{{ session('error') }}",
+                        confirmButtonColor: '#3085d6',
+                    });
+                } else {
+                    console.error("SweetAlert belum dimuat! Pastikan npm run dev berjalan.");
+                }
+            };
         </script>
     @endif
 @endsection

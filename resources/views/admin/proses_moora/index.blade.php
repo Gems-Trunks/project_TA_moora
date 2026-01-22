@@ -68,29 +68,44 @@
                                 </tr>
                                 <tr>
                                     @foreach ($kriteria as $k)
-                                        <th>{{ $k->kode }}</th>
+                                        <th>{{ $k->nama_kriteria }}</th>
                                     @endforeach
                                 </tr>
                             </thead>
+
                             <tbody>
-                                @foreach ($penilaian as $id_calon => $items)
+                                @forelse ($penilaian as $id_calon => $items)
                                     <tr>
                                         <td class="text-start ps-3">
                                             {{ $items->first()->majelis->nama_calon }}
                                         </td>
+
                                         @foreach ($kriteria as $k)
-                                            @php $row = $items->where('id_kriteria', $k->id)->first(); @endphp
-                                            <td>{{ $row ? number_format($row->nilai, 2) : '0.00' }}</td>
+                                            @php
+                                                $row = $items->where('id_kriteria', $k->id)->first();
+                                            @endphp
+                                            <td>
+                                                {{ $row ? number_format($row->nilai, 2) : '0.00' }}
+                                            </td>
                                         @endforeach
                                     </tr>
-                                @endforeach
+                                @empty
+                                    <tr>
+                                        <td colspan="{{ $kriteria->count() + 1 }}" class="text-center text-muted py-4">
+                                            Data penilaian belum tersedia.
+                                        </td>
+                                    </tr>
+                                @endforelse
                             </tbody>
+
                             <tfoot class="fw-bold bg-light">
                                 <tr>
                                     <td>Bobot (W)</td>
-                                    @foreach ($kriteria as $k)
+                                    @forelse ($kriteria as $k)
                                         <td>{{ $k->bobot }}</td>
-                                    @endforeach
+                                    @empty
+                                        <td class="text-center text-muted">-</td>
+                                    @endforelse
                                 </tr>
                             </tfoot>
                         </table>
@@ -111,7 +126,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($penilaian as $id_calon => $items)
+                                @forelse ($penilaian as $id_calon => $items)
                                     @foreach ($kriteria as $index => $k)
                                         @php
                                             $proses = $dataProses
@@ -119,19 +134,33 @@
                                                 ->where('id_kriteria', $k->id)
                                                 ->first();
                                         @endphp
+
                                         <tr>
                                             @if ($index == 0)
                                                 <td rowspan="{{ $kriteria->count() }}" class="fw-bold text-center">
                                                     {{ $items->first()->majelis->nama_calon }}
                                                 </td>
                                             @endif
-                                            <td>{{ $k->nama_kriteria }}</td>
-                                            <td class="text-center">{{ number_format($proses->nilai_awal, 2) }}</td>
-                                            <td class="text-center">{{ number_format($proses->nilai_normalisasi, 4) }}</td>
-                                            <td class="text-center">{{ number_format($proses->nilai_bobot, 4) }}</td>
+
+                                            <td>{{ $k->nama }}</td>
+                                            <td class="text-center">
+                                                {{ $proses ? number_format($proses->nilai_awal, 2) : '0.00' }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ $proses ? number_format($proses->nilai_normalisasi, 4) : '0.0000' }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ $proses ? number_format($proses->nilai_bobot, 4) : '0.0000' }}
+                                            </td>
                                         </tr>
                                     @endforeach
-                                @endforeach
+                                @empty
+                                    <tr>
+                                        <td colspan="5" class="text-center text-muted py-4">
+                                            Data belum tersedia.
+                                        </td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     @else

@@ -40,8 +40,18 @@
                                     <td class="text-center">
                                         {{ $d->jenis_kelamin }}
                                     </td>
-                                    <td class="text-center">{{ $d->usia }} Thn</td>
-                                    <td class="text-center">{{ $d->lama_menjadi_jemaat }} Thn</td>
+                                    <td class="text-center">{{ $d->usia }} Tahun</td>
+                                    <td class="text-center">
+                                        @if ($d->lama_menjadi_jemaat == 1)
+                                            &le; 5 Tahun
+                                        @elseif ($d->lama_menjadi_jemaat == 2)
+                                            6 - 10 Tahun
+                                        @elseif ($d->lama_menjadi_jemaat == 3)
+                                            15 Tahun
+                                        @else
+                                            > 15 Tahun
+                                        @endif
+                                    </td>
                                     <td class="text-center">
                                         <div class="d-flex justify-content-center gap-1">
                                             <a href="{{ route('admin.majelis.edit', $d->id) }}"

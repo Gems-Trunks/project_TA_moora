@@ -10,7 +10,7 @@ class PenilaianModel extends Model
     //
     use HasFactory;
     protected $table = "penilaian";
-    protected $fillable = ['id_calon', 'id_kriteria', 'nilai'];
+    protected $fillable = ['id_jemaat', 'id_calon', 'id_kriteria', 'nilai'];
     // relasi ke tabel calon_majelis
     public function majelis()
     {

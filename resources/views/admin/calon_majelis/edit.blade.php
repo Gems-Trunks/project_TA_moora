@@ -46,9 +46,29 @@
 
                                     <div class="mb-3">
                                         <label for="lama_jemaat" class="form-label">Lama Menjadi Jemaat :</label>
-                                        <input type="number" name="lama_menjadi_jemaat" id="lama_jemaat"
-                                            class="form-control bg-light"
-                                            value="{{ old('lama_menjadi_jemaat', $data->lama_menjadi_jemaat) }}" required>
+                                        <select name="lama_menjadi_jemaat" id="lama_jemaat" class="form-select bg-light"
+                                            required>
+                                            <option value="" selected disabled>Pilih Lama Menjadi Jemaat</option>
+                                            <option value="1"
+                                                {{ old('lama_menjadi_jemaat', $data->lama_menjadi_jemaat) == '1' ? 'selected' : '' }}>
+                                                1
+                                            </option>
+                                            <option value="2"
+                                                {{ old('lama_menjadi_jemaat', $data->lama_menjadi_jemaat) == '2' ? 'selected' : '' }}>
+                                                2
+
+                                            </option>
+                                            <option value="3"
+                                                {{ old('lama_menjadi_jemaat', $data->lama_menjadi_jemaat) == '3' ? 'selected' : '' }}>
+                                                3
+
+                                            </option>
+                                            <option value="4"
+                                                {{ old('lama_menjadi_jemaat', $data->lama_menjadi_jemaat) == '4' ? 'selected' : '' }}>
+                                                4
+
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
 
