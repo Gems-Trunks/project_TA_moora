@@ -81,4 +81,13 @@
             }
         }
     </style>
+    @if (session('success'))
+        <script type="module">
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('success') }}'
+            })
+        </script>
+    @endif
 @endsection

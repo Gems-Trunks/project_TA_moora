@@ -71,4 +71,20 @@
             </div>
         </div>
     </div>
+    @if (session('success'))
+        <script>
+            window.onload = function() {
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: "{{ session('success') }}",
+                        confirmButtonColor: '#3085d6',
+                    });
+                } else {
+                    console.error("SweetAlert belum dimuat! Pastikan npm run dev berjalan.");
+                }
+            };
+        </script>
+    @endif
 @endsection

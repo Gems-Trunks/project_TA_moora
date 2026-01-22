@@ -36,10 +36,8 @@
         crossorigin="anonymous" />
     <!--end::Third Party Plugin(Bootstrap Icons)-->
     <!-- apexcharts -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css"
-        integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous" />
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="icon" href="{{ asset('assets/images/logos/LOGO_GKE.png') }}" type="image/x-icon">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="layout-fixed sidebar-expand-lg sidebar-mini bg-body-tertiary">

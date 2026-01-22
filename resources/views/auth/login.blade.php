@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
     <link rel="icon" href="{{ asset('assets/images/logos/LOGO_GKE.png') }}">
 </head>
 
@@ -107,7 +106,6 @@
 
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('assets/js/adminlte.js') }}"></script>
 
 </body>
 
