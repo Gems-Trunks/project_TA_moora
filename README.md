@@ -15,7 +15,7 @@ di paling atas atau sebelum function
 
 ## Perubahan Yang di ubah :
 yang  di ubah dari desain tabel :
-1. tabel penilianan tambahan : updated_at
+1. tabel penilianan tambahan : updated_at, id_jemaat
 2. tabel proses moora tambahan : updated_at
 3. tabel hasil Moora : keterangan
 
