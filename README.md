@@ -12,12 +12,14 @@ di paling atas atau sebelum function
 ## Perubahan di desain ada di bagian proses Moora :
 1. penambahan tab dan tombol hitung moora
 2. spearman input ranking manual di lakukan 1 waktu
+3. penamambahan tombol reset ranking di uji korelasi spearman
 
 ## Perubahan Yang di ubah :
 yang  di ubah dari desain tabel :
 1. tabel penilianan tambahan : updated_at, id_jemaat
 2. tabel proses moora tambahan : updated_at
 3. tabel hasil Moora : keterangan
+
 
 ## Cara install :
 1. pastikan ada aplikasi xampp atau laragon
@@ -41,3 +43,22 @@ yang  di ubah dari desain tabel :
    pilih salah satu aja!
 6. Aplikasi berjalan dan bisa di pakai
 
+## cara install database
+1. buka localhost/phpmyadmin
+2. masuk pakai root password nya kosongin
+3. import database pilih file ta_moora.sql
+4. import aja langsung
+5. selesai
+
+## Akun 
+Akun yang bisa di pakai :
+Admin :
+username : admin
+password : nia2026
+
+jemaat :
+username : brieyan
+password : brieyan2829
+
+username : kaukasus
+username : kauskasus
