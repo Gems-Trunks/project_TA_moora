@@ -142,7 +142,7 @@
                                                 </td>
                                             @endif
 
-                                            <td>{{ $k->nama }}</td>
+                                            <td>{{ $k->nama_kriteria }}</td>
                                             <td class="text-center">
                                                 {{ $proses ? number_format($proses->nilai_awal, 2) : '0.00' }}
                                             </td>

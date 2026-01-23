@@ -15,6 +15,16 @@
                         <a href="{{ route('admin.korelasi.rank.create') }}" class="btn btn-sm btn-success">
                             <i class="fa fa-plus-square"></i> isi ranking Manual
                         </a>
+                        <form action="{{ route('admin.korelasi.rank.reset') }}" method="POST"
+                            onsubmit="return confirm('Yakin ingin mereset seluruh data pengujian Spearman?')"
+                            class="d-inline">
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <i class="fa fa-trash"></i> Reset Spearman
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -26,17 +36,28 @@
                             <tr>
                                 <th width="50px">No</th>
                                 <th>Nama Calon</th>
-                                <th>Rank Moora</th>
-                                <th>Rank Manual</th>
-                                <th>d</th>
-                                <th>d<sup>2</sup></th>
+                                <th>
+                                    Rank MOORA <br>
+                                    <small class="text-muted">(Xi)</small>
+                                </th>
+                                <th>
+                                    Rank Manual <br>
+                                    <small class="text-muted">(Yi)</small>
+                                </th>
+                                <th>
+                                    d <br>
+                                    <small class="text-muted">(Xi − Yi)</small>
+                                </th>
+                                <th>
+                                    d<sup>2</sup>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($data as $i => $row)
-                                <tr>
+                                <tr class="text-center">
                                     <td>{{ $i + 1 }}</td>
-                                    <td>{{ $row->majelis->nama_calon }}</td>
+                                    <td class="text-start">{{ $row->majelis->nama_calon }}</td>
                                     <td>{{ $row->nilai_sistem }}</td>
                                     <td>{{ $row->nilai_manual }}</td>
                                     <td>{{ $row->d }}</td>
@@ -44,7 +65,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="{{ $data->count() > 0 ? 6 : 6 }}" class="text-center text-muted py-4">
+                                    <td colspan="6" class="text-center text-muted py-4">
                                         Data Uji Spearman belum tersedia.
                                     </td>
                                 </tr>
@@ -52,26 +73,34 @@
                         </tbody>
                     </table>
                 </div>
-                <p><b>ρ (rho)</b> = {{ number_format($rho, 4) }}</p>
+                @php
+                    $absRho = abs($rho);
+                @endphp
+                <p><b>ρ (rho)</b> = {{ number_format($absRho, 4) }}</p>
 
                 <p>
                     <b>Interpretasi:</b>
-                    @if ($rho >= 0.8)
+                    @if ($absRho >= 0.8)
                         Korelasi sangat kuat
-                    @elseif ($rho >= 0.6)
+                    @elseif ($absRho >= 0.6)
                         Korelasi kuat
-                    @elseif ($rho >= 0.4)
+                    @elseif ($absRho >= 0.4)
                         Korelasi sedang
-                    @elseif ($rho >= 0.2)
+                    @elseif ($absRho >= 0.2)
                         Korelasi lemah
                     @else
                         Korelasi sangat lemah
                     @endif
-                </p>
 
+                    @if ($rho < 0)
+                        (berlawanan arah)
+                    @else
+                        (searah)
+                    @endif
+                </p>
                 <p><b>Kesimpulan:</b>
                     Metode MOORA memiliki tingkat kesesuaian
-                    <b>{{ number_format($rho * 100, 2) }}%</b>
+                    <b>{{ number_format($absRho * 100, 2) }}%</b>
                     dengan penilaian manual.
                 </p>
             </div>

@@ -24,52 +24,90 @@ class MooraService
       ProsesMooraModel::truncate();
       HasilModel::truncate();
 
-      $penilaian = PenilaianModel::selectRaw('
-        id_calon,
-        id_kriteria,
-        AVG(nilai) as nilai
-    ')
+      $penilaian = PenilaianModel::selectRaw(
+         'id_calon, id_kriteria, AVG(nilai) as nilai'
+      )
          ->groupBy('id_calon', 'id_kriteria')
          ->get()
          ->groupBy('id_calon');
 
       $kriteria = KriteriaModel::all();
 
+      // cek bobot
+      // dd([
+      //    'bobot' => $kriteria->pluck('bobot'),
+      //    'total_bobot' => $kriteria->sum('bobot')
+      // ]);
+
       // 1. Hitung pembagi
       $pembagi = $this->hitungPembagi($penilaian, $kriteria);
 
       $hasilYi = [];
 
-      // 2. Proses per calon
       foreach ($penilaian as $id_calon => $items) {
          $totalBenefit = 0;
-         $totalCost    = 0;
+         $totalCost = 0;
+
+         // cek data 1 calon
+         // if ($id_calon == 7) { // ganti 1 dengan id calon yang mau kamu cek
+         //    dd([
+         //       'id_calon' => $id_calon,
+         //       'nilai_awal' => $items->pluck('nilai'),
+         //       'normalisasi' => $kriteria->map(function ($k) use ($items, $pembagi) {
+         //          $row = $items->where('id_kriteria', $k->id)->first();
+         //          $nilai = $row ? $row->nilai : 0;
+         //          return $nilai / ($pembagi[$k->id] ?? 1);
+         //       }),
+         //       'nilai_bobot' => $kriteria->map(function ($k) use ($items, $pembagi) {
+         //          $row = $items->where('id_kriteria', $k->id)->first();
+         //          $nilai = $row ? $row->nilai : 0;
+         //          return ($nilai / ($pembagi[$k->id] ?? 1)) * $k->bobot;
+         //       }),
+         //    ]);
+         // }
+
+         $totalBobot = $kriteria->sum('bobot');
 
          foreach ($kriteria as $k) {
+
             $row = $items->where('id_kriteria', $k->id)->first();
 
-            $nilaiAwal    = $row ? $row->nilai : 0;
-            $normalisasi  = $nilaiAwal / ($pembagi[$k->id] ?? 1);
-            $nilaiBobot   = $normalisasi * ($k->bobot ?? 0);
+            $nilaiAwal   = $row ? $row->nilai : 0;
+            $normalisasi = $nilaiAwal / ($pembagi[$k->id] ?? 1);
+            $bobotNormal = $k->bobot / $totalBobot;
 
-            if (strtolower($k->jenis) === 'cost') {
+            $nilaiBobot = $normalisasi * $bobotNormal;
+
+            if (strtolower(trim($k->jenis)) === 'cost') {
                $totalCost += $nilaiBobot;
             } else {
                $totalBenefit += $nilaiBobot;
             }
 
-            ProsesMooraModel::create([
-               'id_calon'            => $id_calon,
-               'id_kriteria'         => $k->id,
-               'nilai_awal'          => $nilaiAwal,
-               'nilai_normalisasi'   => $normalisasi,
-               'nilai_bobot'         => $nilaiBobot,
-            ]);
+            ProsesMooraModel::updateOrCreate(
+               [
+                  'id_calon' => $id_calon,
+                  'id_kriteria' => $k->id
+               ],
+               [
+                  'nilai_awal' => $nilaiAwal,
+                  'nilai_normalisasi' => $normalisasi,
+                  'nilai_bobot' => $nilaiBobot,
+                  'nilai_yi' => null
+               ]
+            );
          }
 
-         // hitung Yi per calon (SETELAH semua kriteria)
-         $hasilYi[$id_calon] = $totalBenefit - $totalCost;
+         // ✅ Yi dihitung SATU KALI
+         $yi = $totalBenefit - $totalCost;
+         $hasilYi[$id_calon] = $yi;
+
+         // update Yi ke semua baris calon
+         ProsesMooraModel::where('id_calon', $id_calon)
+            ->update(['nilai_yi' => $yi]);
       }
+
+
 
       // simpan hasil akhir
       $this->simpanHasilAkhir($hasilYi);
@@ -92,17 +130,34 @@ class MooraService
    */
    private function hitungPembagi($penilaian, $kriteria)
    {
+      // $pembagi = [];
+
+      // foreach ($kriteria as $k) {
+
+      //    $sumSq = 0;
+
+      //    foreach ($penilaian as $items) {
+      //       $nilai = $items->where('id_kriteria', $k->id)->first()->nilai ?? 0;
+      //       $sumSq += pow($nilai, 2);
+      //    }
+
+      //    $pembagi[$k->id] = $sumSq > 0 ? sqrt($sumSq) : 1;
+      // }
+
+      // return $pembagi;
+
       $pembagi = [];
 
       foreach ($kriteria as $k) {
-         $sumSq = 0;
+         $jumlahKuadrat = 0;
 
          foreach ($penilaian as $items) {
-            $nilai = $items->where('id_kriteria', $k->id)->first()->nilai ?? 0;
-            $sumSq += pow($nilai, 2);
+            $row = $items->where('id_kriteria', $k->id)->first();
+            $nilai = $row ? $row->nilai : 0;
+            $jumlahKuadrat += pow($nilai, 2);
          }
 
-         $pembagi[$k->id] = $sumSq > 0 ? sqrt($sumSq) : 1;
+         $pembagi[$k->id] = sqrt($jumlahKuadrat);
       }
 
       return $pembagi;

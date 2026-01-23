@@ -25,7 +25,7 @@
                         <td>
                             <input type="hidden" name="ranking[{{ $i }}][id_calon]" value="{{ $row->id_calon }}">
 
-                            <input type="number" name="ranking[{{ $i }}][peringkat]" class="form-control"
+                            <input type="number" name="ranking[{{ $i }}][skor_manual]" class="form-control"
                                 min="1" required>
                         </td>
                     </tr>

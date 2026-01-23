@@ -82,6 +82,8 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('/rank/tambah', 'rankCreate')->name('rank.create');
                 Route::post('/rank/store', 'rankStore')->name('rank.store');
+                Route::delete('/rank/reset', [SpearmanController::class, 'reset'])
+                    ->name('rank.reset');
             });
 
             //Route Cetak Laporan
